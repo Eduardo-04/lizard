@@ -15,10 +15,10 @@ const USER = {
 };
 
 const STATS = [
-  { label: 'ÁLBUMES',  count: 12, glyph: '音', color: '#00d9ff' },
-  { label: 'FILMS',    count: 8,  glyph: '映', color: '#ff2147' },
-  { label: 'JUEGOS',   count: 5,  glyph: '遊', color: '#a855f7' },
-  { label: 'LIBROS',   count: 3,  glyph: '読', color: '#f59e0b' },
+  { label: 'ÁLBUMES',   count: 12, glyph: '音', color: '#00d9ff' },
+  { label: 'FILMS',     count: 8,  glyph: '映', color: '#ff2147' },
+  { label: 'JUEGOS',    count: 5,  glyph: '遊', color: '#a855f7' },
+  { label: 'LIBROS',    count: 3,  glyph: '読', color: '#f59e0b' },
 ];
 
 const DIARY = [
@@ -78,7 +78,15 @@ export default function ProfileScreen() {
 
         {/* TOPBAR */}
         <View style={s.topbar}>
+          <TouchableOpacity 
+            style={s.backBtn} 
+            onPress={() => router.push('/home')} // Asegúrate que tu ruta se llame /home o solo /
+          >
+            <Text style={s.backIcon}>←</Text>
+          </TouchableOpacity>
+          
           <Text style={s.topbarLabel}>PERFIL</Text>
+          
           <TouchableOpacity
             style={s.settingsBtn}
             onPress={() => router.push('/settings')}
@@ -190,8 +198,11 @@ export default function ProfileScreen() {
           </View>
         ))}
 
-        <TouchableOpacity style={s.logoutBtn}>
-          <Text style={s.logoutText}>CERRAR SESIÓN</Text>
+        <TouchableOpacity 
+          style={s.logoutBtn}
+          onPress={() => router.replace('/home')} // Regresa al home y limpia historial
+        >
+          <Text style={s.logoutText}>TERMINAR_SESIÓN [ EXIT ]</Text>
         </TouchableOpacity>
 
       </ScrollView>
@@ -207,6 +218,8 @@ const s = StyleSheet.create({
 
   topbar:       { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingTop: 20, marginBottom: 32 },
   topbarLabel:  { color: '#f4f4f5', fontSize: 11, fontWeight: '700', letterSpacing: 3, textTransform: 'uppercase' },
+  backBtn:      { width: 36, height: 36, borderWidth: 1, borderColor: '#27272a', alignItems: 'center', justifyContent: 'center' },
+  backIcon:     { color: '#f4f4f5', fontSize: 18 },
   settingsBtn:  { width: 36, height: 36, borderWidth: 1, borderColor: '#27272a', alignItems: 'center', justifyContent: 'center' },
   settingsIcon: { color: '#52525b', fontSize: 16 },
 
