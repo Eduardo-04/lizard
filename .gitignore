@@ -1,8 +1,7 @@
-# Crea el .gitignore
-echo "node_modules/
+node_modules/
 .expo/
 dist/
 build/
 *.log
 .env
-.env.local" > .gitignore
+.env.local
