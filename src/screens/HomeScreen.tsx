@@ -31,7 +31,7 @@ const NETWORK_FEED = [
     user: 'carlos.mx', 
     action: 'calificó', 
     media: 'Berserk Vol. 13', 
-    creator: 'Kentaro Miura', // Agregamos creador para el detalle
+    creator: 'Kentaro Miura',
     type: 'TEXT', 
     rating: 5, 
     time: 'hace 2 min', 
@@ -48,6 +48,40 @@ const NETWORK_FEED = [
     time: 'hace 14 min', 
     cover: 'https://picsum.photos/seed/chainsaw/80/80' 
   },
+];
+
+// --- NUEVA DATA GLOBAL ---
+const GLOBAL_TRENDS = [
+  {
+    id: 'g1',
+    category: 'VISUAL',
+    title: 'Dune: Part Two',
+    rating: '4.8',
+    logs: '12.4K',
+    image: 'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=200&auto=format&fit=crop',
+    user: '@cinephile99',
+    review: 'Denis Villeneuve lo volvió a hacer. Una experiencia religiosa en Imax.',
+  },
+  {
+    id: 'g2',
+    category: 'INTERACT',
+    title: 'Elden Ring: SOTET',
+    rating: '4.9',
+    logs: '8.2K',
+    image: 'https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=200&auto=format&fit=crop',
+    user: '@souls_fan',
+    review: 'El jefe final me costó 4 horas de mi vida. 10/10.',
+  },
+  {
+    id: 'g3',
+    category: 'AUDIO',
+    title: 'Brat',
+    rating: '4.2',
+    logs: '45.1K',
+    image: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop',
+    user: '@pop_head',
+    review: 'Totalmente adictivo. Producción impecable.',
+  }
 ];
 
 const TYPE_COLOR: Record<string, string> = {
@@ -70,15 +104,14 @@ function Stars({ count }: { count: number }) {
 export default function HomeScreen() {
   const [feedChannel, setFeedChannel] = useState<'NETWORK' | 'GLOBAL'>('NETWORK');
 
-  // Función para navegar al detalle
   const goToDetail = (item: any) => {
     router.push({
       pathname: `/media/${item.id}`,
       params: {
         id: item.id,
-        title: item.media,
+        title: item.media || item.title,
         artist: item.creator || 'Unknown',
-        cover: item.cover
+        cover: item.cover || item.image
       }
     });
   };
@@ -158,30 +191,69 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* FEED INTERACTIVO */}
-        {NETWORK_FEED.map((item) => (
-          <TouchableOpacity 
-            key={item.id} 
-            activeOpacity={0.7} 
-            style={s.feedItem}
-            onPress={() => goToDetail(item)} // <-- CONECTADO A LA PÁGINA DE DETALLE
-          >
-            <Image source={{ uri: item.cover }} style={s.cover} />
-            <View style={s.feedInfo}>
-              <View style={s.feedTopRow}>
-                <Text style={s.feedUser}>{item.user}</Text>
-                <Text style={[s.feedType, { color: TYPE_COLOR[item.type] }]}>{item.type}</Text>
+        {/* --- RENDERIZADO CONDICIONAL DEL FEED --- */}
+        {feedChannel === 'NETWORK' ? (
+          /* FEED NETWORK ORIGINAL */
+          NETWORK_FEED.map((item) => (
+            <TouchableOpacity 
+              key={item.id} 
+              activeOpacity={0.7} 
+              style={s.feedItem}
+              onPress={() => goToDetail(item)}
+            >
+              <Image source={{ uri: item.cover }} style={s.cover} />
+              <View style={s.feedInfo}>
+                <View style={s.feedTopRow}>
+                  <Text style={s.feedUser}>{item.user}</Text>
+                  <Text style={[s.feedType, { color: TYPE_COLOR[item.type] }]}>{item.type}</Text>
+                </View>
+                <Text style={s.feedMedia} numberOfLines={1}>
+                  {item.action} <Text style={s.feedMediaBold}>{item.media}</Text>
+                </Text>
+                <View style={s.feedBottom}>
+                  <Stars count={item.rating} />
+                  <Text style={s.feedTime}>{item.time}</Text>
+                </View>
               </View>
-              <Text style={s.feedMedia} numberOfLines={1}>
-                {item.action} <Text style={s.feedMediaBold}>{item.media}</Text>
-              </Text>
-              <View style={s.feedBottom}>
-                <Stars count={item.rating} />
-                <Text style={s.feedTime}>{item.time}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))
+        ) : (
+          /* NUEVO FEED GLOBAL TRENDS (AHORA CLICKABLE) */
+          <View style={s.globalContainer}>
+            {GLOBAL_TRENDS.map((item) => (
+              <TouchableOpacity 
+                key={item.id} 
+                style={s.globalItem}
+                activeOpacity={0.7}
+                onPress={() => goToDetail(item)}
+              >
+                
+                {/* Header: Imagen + Info */}
+                <View style={s.globalHeader}>
+                  <Image source={{ uri: item.image }} style={s.globalImage} />
+                  <View style={s.globalInfo}>
+                    <Text style={[s.globalCategory, { color: TYPE_COLOR[item.category] }]}>
+                      {item.category}
+                    </Text>
+                    <Text style={s.globalTitle}>{item.title}</Text>
+                    <Text style={s.globalStats}>
+                      ★ {item.rating} AVG // {item.logs} LOGS
+                    </Text>
+                  </View>
+                </View>
+
+                {/* Caja de Reseña Indentada */}
+                <View style={s.reviewBox}>
+                  <Text style={s.reviewUserLabel}>
+                    USER: <Text style={s.reviewUser}>{item.user}</Text>
+                  </Text>
+                  <Text style={s.reviewText}>"{item.review}"</Text>
+                </View>
+
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
 
       </ScrollView>
 
@@ -248,4 +320,18 @@ const s = StyleSheet.create({
   commandPrompt:  { color: '#52525b', fontFamily: 'monospace', fontSize: 10, letterSpacing: 1, textTransform: 'uppercase' },
   commandBtn:     { backgroundColor: '#fff', paddingHorizontal: 16, paddingVertical: 10, borderRadius: 2 },
   commandBtnText: { color: '#000', fontWeight: '900', fontSize: 11, letterSpacing: 2, fontFamily: 'monospace' },
+
+  // --- ESTILOS PARA GLOBAL TRENDS ---
+  globalContainer: { paddingHorizontal: 24, paddingTop: 16 },
+  globalItem:      { marginBottom: 32, borderBottomWidth: 1, borderBottomColor: '#18181b', paddingBottom: 24 },
+  globalHeader:    { flexDirection: 'row', gap: 16, marginBottom: 16 },
+  globalImage:     { width: 80, height: 80, backgroundColor: '#18181b', borderWidth: 1, borderColor: '#27272a' },
+  globalInfo:      { flex: 1, justifyContent: 'center' },
+  globalCategory:  { fontSize: 10, fontFamily: 'monospace', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 6 },
+  globalTitle:     { color: '#f4f4f5', fontSize: 20, fontWeight: 'bold', letterSpacing: -0.5, marginBottom: 4 },
+  globalStats:     { color: '#71717a', fontSize: 11, fontFamily: 'monospace', letterSpacing: 1 },
+  reviewBox:       { backgroundColor: '#0a0a0a', borderWidth: 1, borderColor: '#18181b', padding: 16, marginLeft: 32 },
+  reviewUserLabel: { color: '#71717a', fontSize: 10, fontFamily: 'monospace', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 8 },
+  reviewUser:      { color: '#a1a1aa' },
+  reviewText:      { color: '#d4d4d8', fontStyle: 'italic', fontSize: 14, lineHeight: 22 },
 });
