@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "LIZARD",
+    "slug": "lizard-app",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#000000",
+    "scheme": "lizard",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTabletMode": true,
+      "userInterfaceStyle": "dark"
+    },
+    "android": {
+      "package": "com.lizard.app",
+      "userInterfaceStyle": "dark"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": ["expo-router"]
+  }
+}

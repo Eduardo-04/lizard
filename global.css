@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colores Base - Deep Dark */
+  --color-pure-black: #000000;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+  --color-zinc-500: #71717a;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-100: #f4f4f5;
+
+  /* Acentos - Industrial */
+  --color-cyan-500: #00d9ff; /* Cian neón */
+  --color-lizard-accent: #00d9ff;
+  --color-blood-red: #ff0055;
+}
+
+@layer base {
+  /* Configuración global para React Native */
+  * {
+    @apply border-zinc-800;
+  }
+}
+
+@layer components {
+  /* Contenedores */
+  .safe-container {
+    @apply flex-1 bg-pure-black px-6 py-4;
+  }
+
+  /* Tipografía Brutalista */
+  .heading-1 {
+    @apply text-zinc-100 font-bold tracking-tighter;
+  }
+
+  /* Botones */
+  .btn-primary {
+    @apply bg-cyan-500 py-4 px-6 rounded-none items-center justify-center transition-all active:opacity-80;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border border-zinc-700 py-4 px-6 rounded-none items-center justify-center active:bg-zinc-900;
+  }
+
+  /* Bordes y Detalles */
+  .brutalist-border {
+    @apply border-2 border-white/10;
+  }
+
+  /* Cards para el tracker */
+  .media-card {
+    @apply bg-zinc-900 border border-zinc-800 rounded-none overflow-hidden;
+  }
+}
+
+@layer utilities {
+  /* Efectos de interfaz industrial */
+  .accent-glow {
+    @apply shadow-[0_0_15px_rgba(0,217,255,0.4)];
+  }
+  
+  .terminal-text {
+    @apply font-mono text-[11px] leading-relaxed;
+  }
+}

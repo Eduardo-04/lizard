@@ -1,0 +1,8 @@
+# Crea el .gitignore
+echo "node_modules/
+.expo/
+dist/
+build/
+*.log
+.env
+.env.local" > .gitignore
