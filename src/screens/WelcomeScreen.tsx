@@ -49,7 +49,7 @@ export default function WelcomeScreen() {
           <TouchableOpacity
             activeOpacity={0.9}
             style={s.btnPrimary}
-            onPress={() => router.push('/home')}
+            onPress={() => router.push('/(tabs)/home')}
           >
             <Text style={s.btnPrimaryText}>CREATE ACCOUNT</Text>
           </TouchableOpacity>

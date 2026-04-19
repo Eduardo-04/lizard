@@ -4,6 +4,7 @@ import {
   StatusBar, StyleSheet, TouchableOpacity, Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 
 // --- MOCK DATA ---
 const USER = {
@@ -106,9 +107,13 @@ export default function HomeScreen() {
             <Text style={s.greeting}>Bienvenido de vuelta</Text>
             <Text style={s.username}>{USER.username}</Text>
           </View>
-          <View style={s.avatar}>
+          <TouchableOpacity
+            style={s.avatar}
+            onPress={() => router.push('/(tabs)/profile')}
+            activeOpacity={0.7}
+          >
             <Text style={s.avatarText}>E</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         {/* STATS */}
@@ -138,9 +143,7 @@ export default function HomeScreen() {
             <View style={s.feedInfo}>
               <View style={s.feedTopRow}>
                 <Text style={s.feedUser}>{item.user}</Text>
-                <Text
-                  style={[s.feedType, { color: TYPE_COLOR[item.type] }]}
-                >
+                <Text style={[s.feedType, { color: TYPE_COLOR[item.type] }]}>
                   {item.type}
                 </Text>
               </View>
@@ -161,39 +164,39 @@ export default function HomeScreen() {
 }
 
 const s = StyleSheet.create({
-  root:            { flex: 1, backgroundColor: '#000' },
-  content:         { paddingTop: 20, paddingBottom: 80 },
+  root:          { flex: 1, backgroundColor: '#000' },
+  content:       { paddingTop: 20, paddingBottom: 80 },
 
   // TOPBAR
-  topbar:          { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, marginBottom: 28 },
-  greeting:        { color: '#52525b', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 2 },
-  username:        { color: '#f4f4f5', fontSize: 20, fontWeight: '900', letterSpacing: -0.5 },
-  avatar:          { width: 40, height: 40, borderRadius: 20, backgroundColor: '#18181b', borderWidth: 1, borderColor: '#27272a', alignItems: 'center', justifyContent: 'center' },
-  avatarText:      { color: '#f4f4f5', fontWeight: '900', fontSize: 16 },
+  topbar:        { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, marginBottom: 28 },
+  greeting:      { color: '#52525b', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 2 },
+  username:      { color: '#f4f4f5', fontSize: 20, fontWeight: '900', letterSpacing: -0.5 },
+  avatar:        { width: 40, height: 40, borderRadius: 20, backgroundColor: '#18181b', borderWidth: 1, borderColor: '#27272a', alignItems: 'center', justifyContent: 'center' },
+  avatarText:    { color: '#f4f4f5', fontWeight: '900', fontSize: 16 },
 
   // STATS
-  statsContainer:  { flexDirection: 'row', paddingHorizontal: 24, justifyContent: 'space-between', marginBottom: 36 },
-  statCard:        { width: '23%', backgroundColor: '#0a0a0a', borderWidth: 1, borderColor: '#18181b', padding: 12, alignItems: 'center' },
-  statGlyph:       { color: '#27272a', fontSize: 22, fontWeight: '900', marginBottom: 4 },
-  statCount:       { color: '#f4f4f5', fontSize: 22, fontWeight: '900', letterSpacing: -1 },
-  statLabel:       { color: '#52525b', fontSize: 8, letterSpacing: 2, textTransform: 'uppercase', marginTop: 4 },
+  statsContainer: { flexDirection: 'row', paddingHorizontal: 24, justifyContent: 'space-between', marginBottom: 36 },
+  statCard:       { width: '23%', backgroundColor: '#0a0a0a', borderWidth: 1, borderColor: '#18181b', padding: 12, alignItems: 'center' },
+  statGlyph:      { color: '#27272a', fontSize: 22, fontWeight: '900', marginBottom: 4 },
+  statCount:      { color: '#f4f4f5', fontSize: 22, fontWeight: '900', letterSpacing: -1 },
+  statLabel:      { color: '#52525b', fontSize: 8, letterSpacing: 2, textTransform: 'uppercase', marginTop: 4 },
 
   // SECTION HEADER
-  sectionHeader:   { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 24, marginBottom: 16 },
-  sectionDot:      { width: 5, height: 5, borderRadius: 3, backgroundColor: '#ff2147', marginRight: 10 },
-  sectionTitle:    { color: '#52525b', fontSize: 10, letterSpacing: 4, textTransform: 'uppercase' },
+  sectionHeader:  { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 24, marginBottom: 16 },
+  sectionDot:     { width: 5, height: 5, borderRadius: 3, backgroundColor: '#ff2147', marginRight: 10 },
+  sectionTitle:   { color: '#52525b', fontSize: 10, letterSpacing: 4, textTransform: 'uppercase' },
 
   // FEED
-  feedItem:        { flexDirection: 'row', paddingHorizontal: 24, paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: '#18181b' },
-  cover:           { width: 52, height: 52, backgroundColor: '#18181b', marginRight: 14 },
-  feedInfo:        { flex: 1, justifyContent: 'space-between' },
-  feedTopRow:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 },
-  feedUser:        { color: '#a1a1aa', fontSize: 12, fontWeight: '700' },
-  feedType:        { fontSize: 9, letterSpacing: 2.5, textTransform: 'uppercase', fontWeight: '700' },
-  feedMedia:       { color: '#71717a', fontSize: 13, marginBottom: 6 },
-  feedMediaBold:   { color: '#f4f4f5', fontWeight: '700' },
-  feedBottom:      { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  stars:           { flexDirection: 'row', gap: 2 },
-  star:            { fontSize: 12 },
-  feedTime:        { color: '#3f3f46', fontSize: 10, letterSpacing: 1 },
+  feedItem:       { flexDirection: 'row', paddingHorizontal: 24, paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: '#18181b' },
+  cover:          { width: 52, height: 52, backgroundColor: '#18181b', marginRight: 14 },
+  feedInfo:       { flex: 1, justifyContent: 'space-between' },
+  feedTopRow:     { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 },
+  feedUser:       { color: '#a1a1aa', fontSize: 12, fontWeight: '700' },
+  feedType:       { fontSize: 9, letterSpacing: 2.5, textTransform: 'uppercase', fontWeight: '700' },
+  feedMedia:      { color: '#71717a', fontSize: 13, marginBottom: 6 },
+  feedMediaBold:  { color: '#f4f4f5', fontWeight: '700' },
+  feedBottom:     { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  stars:          { flexDirection: 'row', gap: 2 },
+  star:           { fontSize: 12 },
+  feedTime:       { color: '#3f3f46', fontSize: 10, letterSpacing: 1 },
 });
