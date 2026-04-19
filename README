@@ -1,0 +1,13 @@
+# Lizard
+
+## Instalación
+```bash
+git clone https://github.com/Eduardo-04/lizard.git
+cd lizard
+npm install
+npx expo start
+```
+
+## Notas
+- No se sube `node_modules/`; cada persona debe correr `npm install`.
+- Si falta alguna dependencia de Expo, instala con `npx expo install`.
